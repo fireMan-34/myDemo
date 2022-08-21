@@ -3,7 +3,7 @@
  * @Author: fireMan34
  * @LastEditors: fireMan34
  * @Date: 2022-08-21 19:18:58
- * @LastEditTime: 2022-08-21 19:32:23
+ * @LastEditTime: 2022-08-21 19:35:29
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +15,11 @@
 </head>
 <body>
     <script>
+        const node={
+            id:5,
+            box:['345'],
+            children:[]
+        };
         const testData={
             id:0,
             box:['12'],
@@ -30,9 +35,11 @@
                         {
                             id:3,
                             box:['48']
-                        }
+                        },
+                        node
                     ]
-                }
+                },
+                node
             ]
         };
         function * iteratorTree(tree){
