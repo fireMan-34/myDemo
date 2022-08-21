@@ -1,0 +1,71 @@
+<!--
+ * @Description: 主要关于可迭代对象与树
+ * @Author: fireMan34
+ * @LastEditors: fireMan34
+ * @Date: 2022-08-21 19:18:58
+ * @LastEditTime: 2022-08-21 19:32:23
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const testData={
+            id:0,
+            box:['12'],
+            children:[
+                {
+                    id:1,
+                    box:['23'],
+                },
+                {
+                    id:2,
+                    box:['34'],
+                    children:[
+                        {
+                            id:3,
+                            box:['48']
+                        }
+                    ]
+                }
+            ]
+        };
+        function * iteratorTree(tree){
+            const stack=[tree];;
+            let curryNode;
+            let set=new WeakSet();
+            while(stack.length>0){
+                curryNode=stack.pop();
+
+                if(set.has(curryNode)){
+                    continue;
+                }else{
+                    set.add(curryNode);
+                }
+
+                if(Array.isArray(curryNode.children)){
+                    stack.push(...curryNode.children);
+                }
+                yield curryNode;
+            }
+        };
+
+        console.log(Array.from(iteratorTree(testData)));
+        
+        //彩蛋
+        const compose=function(...fns){
+            return function (arg){
+                return Array.from(fns).reduceRight((arg,fn)=>fn(arg),arg);
+            }
+        }
+        const getIteratorTreeArr=compose(Array.from,iteratorTree);
+
+        console.log(getIteratorTreeArr(testData));
+    </script>
+</body>
+</html>
